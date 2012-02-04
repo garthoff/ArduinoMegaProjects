@@ -29,6 +29,7 @@ namespace hardware { namespace clock
 	void init ()
 	{
 		TCCR1B |= 1 << 1; // Clock source equals system clock / 8, 0.5 uS per tick
+		TIMSK1 |= 1 << 0; // Enable overflow interrupt
 	}
 
 	//------------------------------------------------------------------------------------------------------------------

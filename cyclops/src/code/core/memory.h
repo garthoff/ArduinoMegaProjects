@@ -3,20 +3,14 @@
 // Created by Carmelo J. Fernández-Agüera Tortosa (a.k.a. Technik)
 // on February 4th, 2012
 //----------------------------------------------------------------------------------------------------------------------
-// memory
+// Memory
 
-#ifndef _CYCLOPS_CORE_TYPES_H_
-#define _CYCLOPS_CORE_TYPES_H_
+#ifndef _CYCLOPS_CORE_MEMORY_H_
+#define _CYCLOPS_CORE_MEMORY_H_
 
-typedef unsigned char	u8;
-typedef signed char		s8;
-typedef unsigned int	u16;
-typedef signed int		s16;
-typedef unsigned long	u32;
-typedef signed long		s32;
+#include "types.h"
 
-typedef float			f32;
+void * operator new (size_t);
+void operator delete(void *);
 
-typedef unsigned int	size_t;
-
-#endif // _CYCLOPS_CORE_TYPES_H_
+#endif // _CYCLOPS_CORE_MEMORY_H_

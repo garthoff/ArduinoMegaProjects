@@ -7,16 +7,19 @@
 
 #include "hardware/clock.h"
 #include "hardware/hardware.h"
+#include "hardware/usSensor.h"
 
 using namespace hardware;
 
 int main ()
 {
 	init();	// Initialize hardware
+	
+	CUSSensor * sensor = new CUSSensor(CUSSensor::eSensor0);
 
 	while( 1 ) // Main loop
 	{
-		if(clock::seconds())
+		if(clock::millis() > 500)
 		{
 			clock::reset();
 			toggleLed();
