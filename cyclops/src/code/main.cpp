@@ -16,30 +16,16 @@ int main ()
 {
 	init();	// Initialize hardware
 	
-	CUSB::init();
-	CUSB::send('a');
-	
 	CUSSensor * sensor = new CUSSensor(CUSSensor::eSensor0);
 	
 	sensor->measure();
-	while(sensor->state() != CUSSensor::eReady)
-	{}
-	int distance = sensor->lastDistance();
-	if(distance > 0)
-	{
-		CUSB::send((unsigned char)distance);
-	}
-	else
-	{
-		CUSB::send(255);
-	}
 
+	unsigned long lastMillis = 0;
 	while( 1 ) // Main loop
 	{
-		if(clock::millis() > 500)
-		{
-			clock::reset();
-			toggleLed();
-		}
+		lastMillis = clock::millis();
+		while((clock::millis() - lastMillis) < 250)
+		{}
+		toggleLed();
 	}
 }

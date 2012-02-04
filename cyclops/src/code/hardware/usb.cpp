@@ -22,8 +22,10 @@ namespace hardware
 	//------------------------------------------------------------------------------------------------------------------
 	void CUSB::send(unsigned char _x)
 	{
+		while ((UCSR0A & (1 << UDRE0)) == 0)
+		{}
 		UDR0 = _x;
-		while(!(UCSR0A && (1<<6))); // Wait for transmision to complete
-		UCSR0A |= 1<<6;
+// 		while(!(UCSR0A & (1<<6))); // Wait for transmision to complete
+// 		UCSR0A |= 1<<6;
 	}
 }	// namespace hardware

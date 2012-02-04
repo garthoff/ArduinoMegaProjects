@@ -33,11 +33,11 @@ namespace hardware { namespace clock
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
-	void reset ()
-	{
-		gTicksH = 0;// Reset stored time
-		TCNT1 = 0;	// Reset timer register
-	}
+// 	void reset ()
+// 	{
+// 		gTicksH = 0;// Reset stored time
+// 		TCNT1 = 0;	// Reset timer register
+// 	}
 
 	//------------------------------------------------------------------------------------------------------------------
 	u32 micros ()

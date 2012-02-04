@@ -52,6 +52,7 @@ namespace hardware
 		int				mDistance;
 		bool			mDestroy;
 		bool			mEchoArrived;
+		unsigned long	mUS;
 		void(*mCallback)(CUSSensor*);
 		
 		static CUSSensor * sActiveSensor;

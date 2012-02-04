@@ -14,7 +14,7 @@ namespace hardware { namespace clock
 {
 	// Clock life management
 	void init	();	///< Initialize system clock
-	void reset	();	///< Reset system clock to zero
+	// void reset	();	///< Reset system clock to zero
 	
 	u32	micros	();	///< Microseconds since power-up or last reset
 	u32	millis	();	///< Milliseconds since power-up or last reset
