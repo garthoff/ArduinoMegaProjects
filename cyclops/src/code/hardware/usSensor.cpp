@@ -11,12 +11,12 @@
 
 ISR(TIMER4_CAPT_vect)
 {
-	CUSSensor::onCaptureEvent();
+	hardware::CUSSensor::onCaptureEvent();
 }
 
 ISR(TIMER5_CAPT_vect)
 {
-	CUSSensor::onCaptureEvent();
+	hardware::CUSSensor::onCaptureEvent();
 }
 
 namespace hardware
@@ -35,6 +35,7 @@ namespace hardware
 		,mState(eReady)
 		,mDistance(-1)
 		,mDestroy(false)
+		,mEchoArrived(false)
 		,mCallback(0)
 	{
 		// Configure registers
@@ -131,6 +132,7 @@ namespace hardware
 	//------------------------------------------------------------------------------------------------------------------
 	void CUSSensor::listenForEchoSignal()
 	{
+		mEchoArrived = false;
 		switch(mSlot)
 		{
 			case eSensor0:
@@ -159,6 +161,7 @@ namespace hardware
 	//------------------------------------------------------------------------------------------------------------------
 	void CUSSensor::listenForEchoEnd()
 	{
+		mEchoArrived = true;
 		switch(mSlot)
 		{
 			case eSensor0:
@@ -185,7 +188,13 @@ namespace hardware
 	//------------------------------------------------------------------------------------------------------------------
 	void CUSSensor::onCaptureEvent()
 	{
-		//
+		if(sActiveSensor)
+		{
+			if(sActiveSensor->mEchoArrived)
+				sActiveSensor->onEchoEnd();
+			else
+				sActiveSensor->onEchoSignal();
+		}
 	}
 	
 	//------------------------------------------------------------------------------------------------------------------

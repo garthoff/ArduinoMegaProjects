@@ -34,6 +34,7 @@ namespace hardware
 		EState		state			() const;
 		void		setCallBack		(void(*_fn)(CUSSensor*));
 		
+		static void onCaptureEvent		();
 	private:
 		~CUSSensor() {}
 		
@@ -45,13 +46,12 @@ namespace hardware
 		static void	onEchoSignal		();
 		static void	onEchoEnd			();
 		
-		static void onCaptureEvent		();
-		
 	private:
 		ESensor			mSlot;
 		EState			mState;
 		int				mDistance;
 		bool			mDestroy;
+		bool			mEchoArrived;
 		void(*mCallback)(CUSSensor*);
 		
 		static CUSSensor * sActiveSensor;

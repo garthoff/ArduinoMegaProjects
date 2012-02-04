@@ -160,6 +160,12 @@
     <Compile Include="code\hardware\hardware.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="code\hardware\serial.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="code\hardware\serial.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="code\hardware\usSensor.cpp">
       <SubType>compile</SubType>
     </Compile>
