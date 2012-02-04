@@ -160,10 +160,10 @@
     <Compile Include="code\hardware\hardware.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="code\hardware\serial.cpp">
+    <Compile Include="code\hardware\usb.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="code\hardware\serial.h">
+    <Compile Include="code\hardware\usb.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="code\hardware\usSensor.cpp">
