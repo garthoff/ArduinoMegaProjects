@@ -5,9 +5,9 @@
 //----------------------------------------------------------------------------------------------------------------------
 // main
 
+#include "core/terminal.h"
 #include "hardware/clock.h"
 #include "hardware/hardware.h"
-#include "hardware/usb.h"
 #include "hardware/usSensor.h"
 
 using namespace hardware;
@@ -15,18 +15,13 @@ using namespace hardware;
 int main ()
 {
 	init();	// Initialize hardware
-	
-	//CUSSensor * sensor = new CUSSensor(CUSSensor::eSensor0);
-	
-	CUSB::send(CUSSensor::measure(CUSSensor::eSensor0) / 10);
 
 	unsigned long lastMillis = 0;
 	while( 1 ) // Main loop
 	{
 		lastMillis = clock::millis();
+		terminal::write(USSensor::measure(USSensor::eSensor0));
 		while((clock::millis() - lastMillis) < 250)
 		{}
-		CUSB::send(CUSSensor::measure(CUSSensor::eSensor0) / 10);
-		toggleLed();
 	}
 }

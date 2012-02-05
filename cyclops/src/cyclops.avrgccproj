@@ -145,6 +145,12 @@
     <Compile Include="code\core\memory.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="code\core\terminal.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="code\core\terminal.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="code\core\types.h">
       <SubType>compile</SubType>
     </Compile>

@@ -23,7 +23,7 @@ namespace hardware
 		sei();			// Enable global interrupts
 		clock::init();	// Initialize system clock
 		
-		CUSB::init();	// Initialize usb communications
+		usb::init();	// Initialize usb communications
 
 		DDRB |= 1 << 7;	// on board led pin must be set as output
 		PORTB |= 1 << 7;// Turn the led on

@@ -10,7 +10,7 @@
 
 namespace hardware
 {
-	class CUSB // Serial communications through USB Link
+	class usb // Serial communications through usb Link
 	{
 	public:
 		static void init ();

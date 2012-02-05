@@ -10,7 +10,7 @@
 
 namespace hardware
 {
-	class CUSSensor
+	class USSensor
 	{
 	public:
 		enum ESensor
@@ -29,16 +29,16 @@ namespace hardware
 		};
 		
 	public:
-		CUSSensor(ESensor _slot);
+		USSensor(ESensor _slot);
 		void		destroy			();
 		int			lastDistance	() const;	// last measured distance (in millimiters)
 		void		measure			();
 		EState		state			() const;
-		void		setCallBack		(void(*_fn)(CUSSensor*));
+		void		setCallBack		(void(*_fn)(USSensor*));
 		
 		static void onCaptureEvent		();
 	private:
-		~CUSSensor() {}
+		~USSensor() {}
 		
 		void		initMeasure			();
 		void		listenForEchoSignal	();
@@ -55,28 +55,28 @@ namespace hardware
 		bool			mDestroy;
 		bool			mEchoArrived;
 		unsigned long	mUS;
-		void(*mCallback)(CUSSensor*);
+		void(*mCallback)(USSensor*);
 		
-		static CUSSensor * sActiveSensor;
-		static CUSSensor * sNextSensor;*/
+		static USSensor * sActiveSensor;
+		static USSensor * sNextSensor;*/
 	};
 	
 	//------------------------------------------------------------------------------------------------------------------
 	// Inline implementations
 	//------------------------------------------------------------------------------------------------------------------
-// 	inline int CUSSensor::lastDistance() const
+// 	inline int USSensor::lastDistance() const
 // 	{
 // 		return mDistance;
 // 	}
 // 	
 // 	//------------------------------------------------------------------------------------------------------------------
-// 	inline CUSSensor::EState CUSSensor::state() const
+// 	inline USSensor::EState USSensor::state() const
 // 	{
 // 		return mState;
 // 	}
 // 	
 // 	//------------------------------------------------------------------------------------------------------------------
-// 	inline void CUSSensor::setCallBack(void (*_callback)(CUSSensor*))
+// 	inline void USSensor::setCallBack(void (*_callback)(USSensor*))
 // 	{
 // 		mCallback = _callback;
 // 	}

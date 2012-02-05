@@ -13,17 +13,17 @@
 
 // ISR(TIMER4_CAPT_vect)
 // {
-// 	hardware::CUSSensor::onCaptureEvent();
+// 	hardware::USSensor::onCaptureEvent();
 // }
 // 
 // ISR(TIMER5_CAPT_vect)
 // {
-// 	hardware::CUSSensor::onCaptureEvent();
+// 	hardware::USSensor::onCaptureEvent();
 // }
 
 namespace hardware
 {
-	unsigned CUSSensor::measure(ESensor _sensor)
+	unsigned USSensor::measure(ESensor _sensor)
 	{
 		if(_sensor == eSensor0)
 		{
@@ -31,16 +31,16 @@ namespace hardware
 			DDRL |= 1; // Pin as output
 			PORTL|= 1; // Pin high
 			clock::delayUS(10);
-			//CUSB::send(1);
+			//usb::send(1);
 			PORTL&=~1; // Pin low
 			DDRL &=~1; // Pin as input
 			// -- Wait for echo
 			while(!(PINL & 1)) {} // Wait for pulse
-			//CUSB::send(2);
+			//usb::send(2);
 			// -- Measure echo duration
 			u32 us = clock::micros(); // micro seconds time stamp
 			while((PINL & 1)) {}	// wait for completion
-			//CUSB::send(3);
+			//usb::send(3);
 			u32 delta = clock::micros() - us; // Measure difference
 			return (unsigned)(float(delta) * 0.17f);
 		}
@@ -49,13 +49,13 @@ namespace hardware
 	/*//------------------------------------------------------------------------------------------------------------------
 	// Static data
 	//------------------------------------------------------------------------------------------------------------------
-	CUSSensor * CUSSensor::sActiveSensor = 0;
-	CUSSensor * CUSSensor::sNextSensor = 0;
+	USSensor * USSensor::sActiveSensor = 0;
+	USSensor * USSensor::sNextSensor = 0;
 	
 	//------------------------------------------------------------------------------------------------------------------
 	// Implementation
 	//------------------------------------------------------------------------------------------------------------------
-	CUSSensor::CUSSensor(ESensor _slot)
+	USSensor::USSensor(ESensor _slot)
 		:mSlot(_slot)
 		,mState(eReady)
 		,mDistance(-1)
@@ -84,7 +84,7 @@ namespace hardware
 	}
 	
 	//------------------------------------------------------------------------------------------------------------------
-	void CUSSensor::destroy()
+	void USSensor::destroy()
 	{
 		cli();	// Disable interrupts to prevent this sensor to become active in the middle of its destruction
 		if(this == sActiveSensor)
@@ -101,7 +101,7 @@ namespace hardware
 	}
 	
 	//------------------------------------------------------------------------------------------------------------------
-	void CUSSensor::measure()
+	void USSensor::measure()
 	{
 		if(mState != eReady)
 			return;	// Already trying to measure
@@ -119,7 +119,7 @@ namespace hardware
 	}
 	
 	//------------------------------------------------------------------------------------------------------------------
-	void CUSSensor::initMeasure()
+	void USSensor::initMeasure()
 	{
 		mState = eMeasuring;
 		sActiveSensor = this;
@@ -161,7 +161,7 @@ namespace hardware
 	}
 	
 	//------------------------------------------------------------------------------------------------------------------
-	void CUSSensor::listenForEchoSignal()
+	void USSensor::listenForEchoSignal()
 	{
 		mEchoArrived = false;
 		switch(mSlot)
@@ -184,13 +184,13 @@ namespace hardware
 	}
 	
 	//------------------------------------------------------------------------------------------------------------------
-	void CUSSensor::onEchoSignal()
+	void USSensor::onEchoSignal()
 	{
 		sActiveSensor->listenForEchoEnd();
 	}
 	
 	//------------------------------------------------------------------------------------------------------------------
-	void CUSSensor::listenForEchoEnd()
+	void USSensor::listenForEchoEnd()
 	{
 		mEchoArrived = true;
 		switch(mSlot)
@@ -211,13 +211,13 @@ namespace hardware
 	}
 	
 	//------------------------------------------------------------------------------------------------------------------
-	void CUSSensor::onEchoEnd()
+	void USSensor::onEchoEnd()
 	{
 		sActiveSensor->finishMeasure();
 	}
 	
 	//------------------------------------------------------------------------------------------------------------------
-	void CUSSensor::onCaptureEvent()
+	void USSensor::onCaptureEvent()
 	{
 		if(sActiveSensor)
 		{
@@ -234,7 +234,7 @@ namespace hardware
 	}
 	
 	//------------------------------------------------------------------------------------------------------------------
-	void CUSSensor::finishMeasure()
+	void USSensor::finishMeasure()
 	{
 		unsigned timeStamp;
 		switch(mSlot)
@@ -243,7 +243,7 @@ namespace hardware
 			{
 				TIMSK4 &= ~(1 << 5);	// Disable input capture interrupts
 				timeStamp = ICR4 >> 9; // clock::micros() - mUS;
-				CUSB::send(timeStamp);
+				usb::send(timeStamp);
 			}
 			case eSensor1:
 			{
