@@ -16,9 +16,9 @@ int main ()
 {
 	init();	// Initialize hardware
 	
-	CUSSensor * sensor = new CUSSensor(CUSSensor::eSensor0);
+	//CUSSensor * sensor = new CUSSensor(CUSSensor::eSensor0);
 	
-	sensor->measure();
+	CUSB::send(CUSSensor::measure(CUSSensor::eSensor0) / 10);
 
 	unsigned long lastMillis = 0;
 	while( 1 ) // Main loop
@@ -26,6 +26,7 @@ int main ()
 		lastMillis = clock::millis();
 		while((clock::millis() - lastMillis) < 250)
 		{}
+		CUSB::send(CUSSensor::measure(CUSSensor::eSensor0) / 10);
 		toggleLed();
 	}
 }

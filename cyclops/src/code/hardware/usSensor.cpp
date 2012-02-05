@@ -11,19 +11,42 @@
 #include "usSensor.h"
 #include "usb.h"
 
-ISR(TIMER4_CAPT_vect)
-{
-	hardware::CUSSensor::onCaptureEvent();
-}
-
-ISR(TIMER5_CAPT_vect)
-{
-	hardware::CUSSensor::onCaptureEvent();
-}
+// ISR(TIMER4_CAPT_vect)
+// {
+// 	hardware::CUSSensor::onCaptureEvent();
+// }
+// 
+// ISR(TIMER5_CAPT_vect)
+// {
+// 	hardware::CUSSensor::onCaptureEvent();
+// }
 
 namespace hardware
 {
-	//------------------------------------------------------------------------------------------------------------------
+	unsigned CUSSensor::measure(ESensor _sensor)
+	{
+		if(_sensor == eSensor0)
+		{
+			// -- Launch pulse
+			DDRL |= 1; // Pin as output
+			PORTL|= 1; // Pin high
+			clock::delayUS(10);
+			//CUSB::send(1);
+			PORTL&=~1; // Pin low
+			DDRL &=~1; // Pin as input
+			// -- Wait for echo
+			while(!(PINL & 1)) {} // Wait for pulse
+			//CUSB::send(2);
+			// -- Measure echo duration
+			u32 us = clock::micros(); // micro seconds time stamp
+			while((PINL & 1)) {}	// wait for completion
+			//CUSB::send(3);
+			u32 delta = clock::micros() - us; // Measure difference
+			return (unsigned)(float(delta) * 0.17f);
+		}
+		return 0;
+	}
+	/*//------------------------------------------------------------------------------------------------------------------
 	// Static data
 	//------------------------------------------------------------------------------------------------------------------
 	CUSSensor * CUSSensor::sActiveSensor = 0;
@@ -47,7 +70,7 @@ namespace hardware
 			case eSensor0:	// Sensor 0 uses timer 4 hardware, digital pin 49 in arduino mega
 			{
 				TCCR4B = (1 << 7); // Activate noise canceller
-				TCCR4B |= (1 << 8); // Start counting time (0.5 uS per tick)
+				TCCR4B |= (1 << 1); // Start counting time (0.5 uS per tick)
 				// Note: The clock never stops counting to save the initialization and stop instructions.
 				// It just resets when required
 				break;
@@ -107,12 +130,12 @@ namespace hardware
 				DDRL |= 1;	// Set sensor pin as output
 				PORTL|= 1;	// Start activation pulse
 				// -- Delay 10 microseconds (~160 instructions)
-				unsigned long us = clock::micros();
-				while((clock::micros() - us) < 10)
-				{}
-// 				TCNT4 = 0;	// Clear counter
-// 				while(TCNT4L < 20)	// 20 ticks mean 10 microseconds
+// 				unsigned long us = clock::micros();
+// 				while((clock::micros() - us) < 10)
 // 				{}
+				TCNT4 = 0;	// Clear counter
+				while(TCNT4L < 20)	// 20 ticks mean 10 microseconds
+				{}
 				// -- End of delay --
 				PORTL&= ~1;	// Terminate activation pulse
 				DDRL &= ~1;
@@ -174,7 +197,6 @@ namespace hardware
 		{
 			case eSensor0:
 			{
-				mUS = clock::micros();
 				TCNT4 = 0;			// Clear clock counter
 				TCCR4B &= ~(1 << 6); // Listen to lowering events in the input pin
 				break;
@@ -208,6 +230,7 @@ namespace hardware
 				sActiveSensor->onEchoSignal();
 			}				
 		}
+		// clear the flag		
 	}
 	
 	//------------------------------------------------------------------------------------------------------------------
@@ -218,7 +241,8 @@ namespace hardware
 		{
 			case eSensor0:
 			{
-				timeStamp = clock::micros() - mUS; // ICR4 >> 1;
+				TIMSK4 &= ~(1 << 5);	// Disable input capture interrupts
+				timeStamp = ICR4 >> 9; // clock::micros() - mUS;
 				CUSB::send(timeStamp);
 			}
 			case eSensor1:
@@ -248,5 +272,5 @@ namespace hardware
 		{
 			sNextSensor->initMeasure();
 		}
-	}
+	}*/
 }	// namespace hardware

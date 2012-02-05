@@ -19,6 +19,9 @@ namespace hardware { namespace clock
 	u32	micros	();	///< Microseconds since power-up or last reset
 	u32	millis	();	///< Milliseconds since power-up or last reset
 	u32	seconds	();	///< seconds since power-up or last reset
+	
+	void	delayMS	(u16 _ms);	///< Delay milliseconds
+	void	delayUS	(u16 _us);	///< Delay microseconds
 }	// namespace clock
 }	// namespace hardware
 

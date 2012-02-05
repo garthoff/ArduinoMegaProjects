@@ -13,6 +13,7 @@
 
 // Project header files
 #include "clock.h"
+#include "usb.h"
 
 namespace hardware
 {

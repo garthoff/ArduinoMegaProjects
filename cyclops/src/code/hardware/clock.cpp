@@ -56,5 +56,21 @@ namespace hardware { namespace clock
 	{
 		return micros() / 1000000;
 	}
+	
+	//------------------------------------------------------------------------------------------------------------------
+	void delayMS(u16 _ms)
+	{
+		u32 ms = millis();
+		while((millis() - ms) < _ms)
+		{}
+	}
+	
+	//------------------------------------------------------------------------------------------------------------------
+	void delayUS(u16 _us)
+	{
+		u32 us = micros();
+		while((micros() - us) < _us)
+		{}
+	}
 }	// namespace clock
 }	// namespace hardware

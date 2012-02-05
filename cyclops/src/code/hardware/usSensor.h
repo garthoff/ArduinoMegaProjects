@@ -19,7 +19,9 @@ namespace hardware
 			eSensor1
 		};
 		
-		enum EState
+		static unsigned measure(ESensor _sensor);
+		
+		/*enum EState
 		{
 			eReady,		// ready to measure
 			eWaiting,	// Waiting to measure
@@ -56,28 +58,28 @@ namespace hardware
 		void(*mCallback)(CUSSensor*);
 		
 		static CUSSensor * sActiveSensor;
-		static CUSSensor * sNextSensor;
+		static CUSSensor * sNextSensor;*/
 	};
 	
 	//------------------------------------------------------------------------------------------------------------------
 	// Inline implementations
 	//------------------------------------------------------------------------------------------------------------------
-	inline int CUSSensor::lastDistance() const
-	{
-		return mDistance;
-	}
-	
-	//------------------------------------------------------------------------------------------------------------------
-	inline CUSSensor::EState CUSSensor::state() const
-	{
-		return mState;
-	}
-	
-	//------------------------------------------------------------------------------------------------------------------
-	inline void CUSSensor::setCallBack(void (*_callback)(CUSSensor*))
-	{
-		mCallback = _callback;
-	}
+// 	inline int CUSSensor::lastDistance() const
+// 	{
+// 		return mDistance;
+// 	}
+// 	
+// 	//------------------------------------------------------------------------------------------------------------------
+// 	inline CUSSensor::EState CUSSensor::state() const
+// 	{
+// 		return mState;
+// 	}
+// 	
+// 	//------------------------------------------------------------------------------------------------------------------
+// 	inline void CUSSensor::setCallBack(void (*_callback)(CUSSensor*))
+// 	{
+// 		mCallback = _callback;
+// 	}
 }
 
 #endif // _CYCLOPS_HARDWARE_USSENSOR_H_
