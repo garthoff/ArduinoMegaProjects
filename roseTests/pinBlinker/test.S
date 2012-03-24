@@ -1,0 +1,4 @@
+.org 0x00
+_resetV:	jmp		0xe4
+.org 0xe4
+_072: 		eor		r1,r1
